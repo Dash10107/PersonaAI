@@ -1,6 +1,31 @@
-export const suggestions= 
-{
-  "hollywood_movies": [
+// TypeScript interfaces for suggestions
+interface Movie {
+  title: string;
+  description: string;
+  image: string;
+}
+
+interface Music {
+  artist: string;
+  description: string;
+  image: string;
+}
+
+interface Activity {
+  activity: string;
+  description: string;
+  image: string;
+}
+
+export interface Suggestions {
+  hollywood_movies: Movie[];
+  bollywood_movies: Movie[];
+  uplifting_music: Music[];
+  other_activities: Activity[];
+}
+
+export const suggestions: Suggestions = {
+  hollywood_movies: [
     {
       "title": "Singin' in the Rain",
       "description": "A classic musical filled with joy, romance, and iconic dance numbers. Perfect for a feel-good mood.",
@@ -22,7 +47,7 @@ export const suggestions=
        "image":"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS-_tYB9Il3Cc3l7yIEgr2Ph2z69R7aKZrvZ01leHjJqBqVDda_2c2X4FfleNNO1Ui5og8H"
     }
   ],
-  "bollywood_movies": [
+  bollywood_movies: [
     {
       "title": "Dilwale Dulhania Le Jayenge (DDLJ)",
       "description": "A timeless romantic classic with beautiful scenery, catchy music, and a heartwarming story. A Bollywood staple.",
@@ -44,7 +69,7 @@ export const suggestions=
        "image":"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSmXLiv7nuwEReNshKlz0l4Bjq3lpN6hLUlSQ6WoSS2KjsmA8TMNILI6MQPWvhl22FCNpfw"
     }
   ],
-  "uplifting_music": [
+  uplifting_music: [
     {
       "artist": "ABBA",
       "description": "Classic disco and pop anthems that are guaranteed to put a smile on your face.  Energetic and nostalgic.",
@@ -66,7 +91,7 @@ export const suggestions=
        "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRllGeF9_hQJbvFWU5POAmvqdUSFnxPe3BerFBC93sq90OmB9VtEZtu2SstVHz0AUw4kc3fwEs_VfkSfdR1nHDm9g"
     }
   ],
-  "other_activities": [
+  other_activities: [
     {
       "activity": "Adult Coloring Books",
       "description": "A relaxing and creative activity that can help reduce stress and promote mindfulness.",

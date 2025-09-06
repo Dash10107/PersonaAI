@@ -1,7 +1,8 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+"use client";
+import React from "react";
+import { motion } from "framer-motion";
 
-const Loader = () => {
+const Loader: React.FC = () => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -11,9 +12,7 @@ const Loader = () => {
       className="flex justify-center items-center h-64"
     >
       <motion.div
-        animate={{
-          rotate: 360,
-        }}
+        animate={{ rotate: 360 }}
         transition={{
           duration: 1,
           repeat: Infinity,

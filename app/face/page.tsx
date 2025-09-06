@@ -1,14 +1,27 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import FaceDetection from "../component/FaceDetection/FaceDetection";
-import { suggestions as suggestionsmain } from "../component/FaceDetection/suggestions";
-import { BentoCardImage, BentoTilt } from "../component/home/Features";
-import Modal from "../component/FaceDetection/Modal";
-import Loader from "../component/FaceDetection/Loader";
+// Update the import path to match the actual file location and name
+import FaceDetection from "@/components/FaceDetection/Detection";
+import { suggestions as suggestionsmain } from "@/components/FaceDetection/suggestions";
+import { BentoCardImage, BentoTilt } from "@/components/Features";
+import Modal from "@/components/FaceDetection/Modal";
+import Loader from "@/components/FaceDetection/Loader";
+
+// Suggestion item type (adjust if your data has more fields)
+type SuggestionItem = {
+  title?: string;
+  activity?: string;
+  artist?: string;
+  description?: string;
+  image?: string;
+};
+
+type Suggestions = Record<string, SuggestionItem[]>;
 
 export default function FaceDetectionPage() {
-  const [suggestions, setSuggestions] = useState(null);
-  const [categories, setCategories] = useState([]);
+  const [suggestions, setSuggestions] = useState<Suggestions | null>(null);
+  const [categories, setCategories] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,8 +35,8 @@ export default function FaceDetectionPage() {
     // Show loader for 3 seconds, then load suggestions
     const loaderTimer = setTimeout(() => {
       setIsLoading(false);
-      setSuggestions(suggestionsmain);
-      const categories = Object.keys(suggestionsmain);
+      setSuggestions(suggestionsmain as Suggestions);
+      const categories = Object.keys(suggestionsmain as Suggestions);
       setCategories(categories);
     }, 13000);
 
@@ -40,10 +53,13 @@ export default function FaceDetectionPage() {
       </Modal>
 
       <main className="mx-auto px-8 md:px-20 py-12">
-      <header className=" py-6">
-        <h1 className="text-4xl font-bold">Personalized Suggestions</h1>
-        <p className="mt-2 text-lg">Discover movies, music, and activities tailored for you!</p>
-      </header>
+        <header className="py-6">
+          <h1 className="text-4xl font-bold">Personalized Suggestions</h1>
+          <p className="mt-2 text-lg">
+            Discover movies, music, and activities tailored for you!
+          </p>
+        </header>
+
         <AnimatePresence>
           {isLoading ? (
             <Loader key="loader" />
@@ -56,7 +72,12 @@ export default function FaceDetectionPage() {
                 exit={{ opacity: 0, y: -50 }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
               >
-                <CategorySection title={category} items={suggestions[category]} />
+                {suggestions && (
+                  <CategorySection
+                    title={category}
+                    items={suggestions[category]}
+                  />
+                )}
               </motion.div>
             ))
           )}
@@ -66,7 +87,12 @@ export default function FaceDetectionPage() {
   );
 }
 
-function CategorySection({ title, items }) {
+type CategorySectionProps = {
+  title: string;
+  items: SuggestionItem[];
+};
+
+function CategorySection({ title, items }: CategorySectionProps) {
   return (
     <div className="mb-12">
       <motion.h2
@@ -77,6 +103,7 @@ function CategorySection({ title, items }) {
       >
         {formatTitle(title)}
       </motion.h2>
+
       <motion.div
         initial="hidden"
         animate="visible"
@@ -97,10 +124,14 @@ function CategorySection({ title, items }) {
   );
 }
 
-function SuggestionCard1({ item }) {
-  const title = item.title || item.activity || item.artist;
-  const description = item.description;
-  const image = item.image;
+type SuggestionCardProps = {
+  item: SuggestionItem;
+};
+
+function SuggestionCard1({ item }: SuggestionCardProps) {
+  const title = item.title || item.activity || item.artist || "Untitled";
+  const description = item.description ?? "";
+  const image = item.image ?? "";
 
   return (
     <motion.div
@@ -121,7 +152,6 @@ function SuggestionCard1({ item }) {
   );
 }
 
-function formatTitle(title) {
+function formatTitle(title: string): string {
   return title.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
 }
-

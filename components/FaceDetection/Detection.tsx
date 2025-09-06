@@ -1,23 +1,27 @@
-'use client'
+"use client";
 import React, { useEffect, useRef } from "react";
 import * as faceapi from "face-api.js";
 
-const Detection = () => {
-  const videoRef = useRef(null);
-  const canvasRef = useRef(null);
-  const videoStreamRef = useRef(null);
-  const moodIntervalRef = useRef(null);
+const Detection: React.FC = () => {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const videoStreamRef = useRef<MediaStream | null>(null);
+  const moodIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const loadModels = async () => {
-      await Promise.all([
-        faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
-        faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
-        faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
-        faceapi.nets.faceExpressionNet.loadFromUri("/models"),
-        faceapi.nets.ageGenderNet.loadFromUri("/models"),
-      ]);
-      startVideo();
+      try {
+        await Promise.all([
+          faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
+          faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
+          faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
+          faceapi.nets.faceExpressionNet.loadFromUri("/models"),
+          faceapi.nets.ageGenderNet.loadFromUri("/models"),
+        ]);
+        startVideo();
+      } catch (error) {
+        console.error("Error loading face-api models:", error);
+      }
     };
 
     const startVideo = () => {
@@ -48,19 +52,19 @@ const Detection = () => {
       document.body.append(canvas);
       canvasRef.current = canvas;
 
-      // Adjust canvas style to align with the video element
+      // Position canvas over video
       const { left, top, width, height } = video.getBoundingClientRect();
       canvas.style.position = "absolute";
       canvas.style.left = `${left}px`;
       canvas.style.top = `${top}px`;
       canvas.width = width;
       canvas.height = height;
-      canvas.style.zIndex = 9999;  // Make sure the canvas appears above other elements
+      canvas.style.zIndex = "9999";
 
-      const displaySize = { width: width, height: height };
+      const displaySize = { width, height };
       faceapi.matchDimensions(canvas, displaySize);
 
-      let moodData = [];
+      let moodData: faceapi.FaceExpressions[] = [];
       let detectionCount = 0;
 
       moodIntervalRef.current = setInterval(async () => {
@@ -70,28 +74,33 @@ const Detection = () => {
             .withFaceExpressions()
             .withAgeAndGender();
 
-          const resizedDetections = faceapi.resizeResults(detections, displaySize);
+          const resizedDetections = faceapi.resizeResults(
+            detections,
+            displaySize
+          );
 
           const ctx = canvas.getContext("2d");
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
 
           faceapi.draw.drawDetections(canvas, resizedDetections);
           faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
 
           if (detections.length > 0) {
-            const moodScores = detections[0].expressions;
-            moodData.push(moodScores);
+            moodData.push(detections[0].expressions);
             detectionCount++;
           }
 
-          // Stop after 5 seconds (approx. 50 frames)
+          // Stop after ~5 seconds
           if (detectionCount >= 50) {
-            clearInterval(moodIntervalRef.current);
+            if (moodIntervalRef.current)
+              clearInterval(moodIntervalRef.current);
             stopVideoStream();
+
             const averageMood = calculateAverageMood(moodData);
-            const age = detections[0]?.age || 25;
+            const age = detections[0]?.age ?? 25;
+
             sendMoodToAPI(averageMood, age);
-            if (canvas) canvas.remove();
+            canvas.remove();
           }
         }
       }, 100);
@@ -100,64 +109,56 @@ const Detection = () => {
     video.addEventListener("play", handleVideoPlay);
 
     return () => {
-      if (video) {
-        video.removeEventListener("play", handleVideoPlay);
-      }
-      if (moodIntervalRef.current) {
-        clearInterval(moodIntervalRef.current);
-      }
-      if (canvasRef.current) {
-        canvasRef.current.remove();
-      }
+      video.removeEventListener("play", handleVideoPlay);
+      if (moodIntervalRef.current) clearInterval(moodIntervalRef.current);
+      if (canvasRef.current) canvasRef.current.remove();
     };
   }, []);
 
   const stopVideoStream = () => {
     if (videoStreamRef.current) {
-      const tracks = videoStreamRef.current.getTracks();
-      tracks.forEach((track) => track.stop());
+      videoStreamRef.current.getTracks().forEach((track) => track.stop());
     }
   };
 
-  const calculateAverageMood = (moodData) => {
-    const aggregatedMood = moodData.reduce((acc, mood) => {
+  const calculateAverageMood = (moodData: faceapi.FaceExpressions[]): string => {
+    const aggregatedMood: Record<string, number> = {};
+
+    moodData.forEach((mood) => {
       for (const [key, value] of Object.entries(mood)) {
-        acc[key] = (acc[key] || 0) + value;
+        aggregatedMood[key] = (aggregatedMood[key] || 0) + value;
       }
-      return acc;
-    }, {});
+    });
 
     const totalEntries = moodData.length;
     for (const key in aggregatedMood) {
       aggregatedMood[key] /= totalEntries;
     }
 
-    // Return the dominant mood
     return Object.keys(aggregatedMood).reduce((a, b) =>
       aggregatedMood[a] > aggregatedMood[b] ? a : b
     );
   };
 
-  const sendMoodToAPI = async (mood, age) => {
+  const sendMoodToAPI = async (mood: string, age: number) => {
     try {
       console.log(`Sending mood: ${mood}, Age: ${age}`);
-      // Uncomment the following lines when you're ready to send data to the API
-      // const response = await fetch("http://localhost:8080/suggest", {
+      // Example API call
+      // const response = await fetch("/api/suggest", {
       //   method: "POST",
       //   headers: { "Content-Type": "application/json" },
       //   body: JSON.stringify({ mood, age }),
       // });
-      // const suggestions = await response.json();
-      // console.log("Suggestions received:", suggestions);
-      console.log("Hello World");
+      // const data = await response.json();
+      // console.log("Suggestions:", data);
     } catch (error) {
       console.error("Error sending mood to API:", error);
     }
   };
 
   return (
-    <div className="video-container">
-      <video ref={videoRef} width="640" height="480" autoPlay muted />
+    <div className="video-container relative">
+      <video ref={videoRef} width={640} height={480} autoPlay muted />
     </div>
   );
 };
