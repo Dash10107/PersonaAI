@@ -22,6 +22,7 @@ import {
   Award,
   CheckCircle,
 } from "lucide-react"
+import Link from "next/link"
 
 const fadeInUp = {
   initial: { opacity: 0, y: 40 },
@@ -102,6 +103,18 @@ export default function HomePage() {
             >
               Impact
             </a>
+            <Link
+              href="/agents"
+              className="text-slate-700 hover:text-purple-600 transition-colors font-medium text-sm tracking-wide"
+            >
+              Agents & Tools
+            </Link>
+            <Link
+              href="/dashboard"
+              className="text-slate-700 hover:text-purple-600 transition-colors font-medium text-sm tracking-wide"
+            >
+              Live Demo
+            </Link>
           </nav>
           <Button className="bg-purple-600 hover:bg-purple-700 text-white px-7 py-2.5 font-semibold shadow-lg hover:shadow-purple-500/30 transition-all duration-300 text-sm">
             Get Started
@@ -154,13 +167,15 @@ export default function HomePage() {
               className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-20"
               variants={fadeInUp}
             >
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white px-10 py-5 text-lg font-semibold shadow-2xl hover:shadow-purple-500/30 transition-all duration-300 group rounded-xl"
-              >
-                Explore the Platform
-                <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              <Link href="/agents">
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white px-10 py-5 text-lg font-semibold shadow-2xl hover:shadow-purple-500/30 transition-all duration-300 group rounded-xl"
+                >
+                  Explore the Platform
+                  <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
               <Button
                 variant="outline"
                 size="lg"
@@ -846,13 +861,15 @@ export default function HomePage() {
               className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-16"
               variants={fadeInUp}
             >
-              <Button
-                size="lg"
-                className="bg-white text-purple-700 hover:bg-purple-50 px-12 py-6 text-xl font-semibold shadow-2xl hover:shadow-white/30 transition-all duration-300 group rounded-2xl"
-              >
-                Start Your Journey
-                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              <Link href="/dashboard">
+                <Button
+                  size="lg"
+                  className="bg-white text-purple-700 hover:bg-purple-50 px-12 py-6 text-xl font-semibold shadow-2xl hover:shadow-white/30 transition-all duration-300 group rounded-2xl"
+                >
+                  Start Your Journey
+                  <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
               <Button
                 variant="outline"
                 size="lg"
