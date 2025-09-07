@@ -7,6 +7,7 @@ import { suggestions as suggestionsmain } from "@/components/FaceDetection/sugge
 import { BentoCardImage, BentoTilt } from "@/components/Features";
 import Modal from "@/components/FaceDetection/Modal";
 import Loader from "@/components/FaceDetection/Loader";
+import Navbar from "@/components/Navbar";
 
 // Suggestion item type (adjust if your data has more fields)
 type SuggestionItem = {
@@ -48,6 +49,8 @@ export default function FaceDetectionPage() {
 
   return (
     <div className="bg-gray-100 min-h-screen min-w-screen text-gray-800">
+      <Navbar />
+      
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {isModalOpen && <FaceDetection />}
       </Modal>

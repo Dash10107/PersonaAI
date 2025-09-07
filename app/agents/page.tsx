@@ -20,6 +20,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
+import Navbar from "@/components/Navbar"
 
 const agents = [
   {
@@ -164,32 +165,7 @@ export default function AgentsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/30 to-slate-100">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-purple-100/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center gap-2 text-slate-600 hover:text-purple-600 transition-colors">
-              <ArrowLeft className="w-4 h-4" />
-              <span className="font-medium">Back to Home</span>
-            </Link>
-            <div className="flex items-center gap-6">
-              <nav className="hidden md:flex items-center gap-6">
-                <Link href="/dashboard" className="text-slate-600 hover:text-purple-600 transition-colors font-medium">
-                  Dashboard Demo
-                </Link>
-              </nav>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-purple-700 rounded-lg flex items-center justify-center">
-                  <Brain className="w-5 h-5 text-white" />
-                </div>
-                <span className="font-bold text-xl bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
-                  EQ Platform
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

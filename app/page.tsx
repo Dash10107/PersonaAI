@@ -23,6 +23,7 @@ import {
   CheckCircle,
 } from "lucide-react"
 import Link from "next/link"
+import Navbar from "@/components/Navbar"
 
 const fadeInUp = {
   initial: { opacity: 0, y: 40 },
@@ -63,64 +64,7 @@ const pulseAnimation = {
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-purple-50/40">
-      <motion.header
-        className="border-b border-purple-100/60 bg-white/98 backdrop-blur-xl supports-[backdrop-filter]:bg-white/98 sticky top-0 z-50 shadow-sm"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="container mx-auto px-6 py-5 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-11 h-11 bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/25">
-              <Brain className="h-6 w-6 text-white" />
-            </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent">
-              EQ Platform
-            </span>
-          </div>
-          <nav className="hidden md:flex items-center space-x-10">
-            <a
-              href="#mission"
-              className="text-slate-700 hover:text-purple-600 transition-colors font-medium text-sm tracking-wide"
-            >
-              Mission
-            </a>
-            <a
-              href="#architecture"
-              className="text-slate-700 hover:text-purple-600 transition-colors font-medium text-sm tracking-wide"
-            >
-              Architecture
-            </a>
-            <a
-              href="#features"
-              className="text-slate-700 hover:text-purple-600 transition-colors font-medium text-sm tracking-wide"
-            >
-              Features
-            </a>
-            <a
-              href="#impact"
-              className="text-slate-700 hover:text-purple-600 transition-colors font-medium text-sm tracking-wide"
-            >
-              Impact
-            </a>
-            <Link
-              href="/agents"
-              className="text-slate-700 hover:text-purple-600 transition-colors font-medium text-sm tracking-wide"
-            >
-              Agents & Tools
-            </Link>
-            <Link
-              href="/dashboard"
-              className="text-slate-700 hover:text-purple-600 transition-colors font-medium text-sm tracking-wide"
-            >
-              Live Demo
-            </Link>
-          </nav>
-          <Button className="bg-purple-600 hover:bg-purple-700 text-white px-7 py-2.5 font-semibold shadow-lg hover:shadow-purple-500/30 transition-all duration-300 text-sm">
-            Get Started
-          </Button>
-        </div>
-      </motion.header>
+      <Navbar />
 
       <section className="relative py-28 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-50/60 via-white to-slate-50/40" />
