@@ -45,7 +45,7 @@ const floatingAnimation = {
     transition: {
       duration: 4,
       repeat: Number.POSITIVE_INFINITY,
-      ease: "easeInOut",
+      ease: "easeInOut" as const,
     },
   },
 }
@@ -56,7 +56,7 @@ const pulseAnimation = {
     transition: {
       duration: 3,
       repeat: Number.POSITIVE_INFINITY,
-      ease: "easeInOut",
+      ease: "easeInOut" as const,
     },
   },
 }

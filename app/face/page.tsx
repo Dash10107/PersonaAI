@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 // Update the import path to match the actual file location and name
 import FaceDetection from "@/components/FaceDetection/Detection";
-import { suggestions as suggestionsmain } from "@/components/FaceDetection/suggestions";
+import { suggestions as suggestionsmain, Suggestions as OriginalSuggestions } from "@/components/FaceDetection/suggestions";
 import { BentoCardImage, BentoTilt } from "@/components/Features";
 import Modal from "@/components/FaceDetection/Modal";
 import Loader from "@/components/FaceDetection/Loader";
@@ -18,7 +18,10 @@ type SuggestionItem = {
   image?: string;
 };
 
-type Suggestions = Record<string, SuggestionItem[]>;
+// Extended Suggestions type with index signature
+type Suggestions = OriginalSuggestions & {
+  [key: string]: SuggestionItem[];
+};
 
 export default function FaceDetectionPage() {
   const [suggestions, setSuggestions] = useState<Suggestions | null>(null);
@@ -37,7 +40,7 @@ export default function FaceDetectionPage() {
     const loaderTimer = setTimeout(() => {
       setIsLoading(false);
       setSuggestions(suggestionsmain as Suggestions);
-      const categories = Object.keys(suggestionsmain as Suggestions);
+      const categories = Object.keys(suggestionsmain);
       setCategories(categories);
     }, 13000);
 
