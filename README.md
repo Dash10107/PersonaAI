@@ -112,21 +112,6 @@ PersonaAI is built on decades of validated research from leading psychological f
 - **UI Components**: Radix UI primitives
 - **State Management**: React Hook Form + Zod validation
 
-### Development Tools
-- **Package Manager**: pnpm
-- **Linting**: ESLint with Next.js config
-- **Font System**: Geist Sans & Geist Mono
-- **Icons**: Lucide React
-- **Analytics**: Vercel Analytics
-- **Deployment**: Vercel Platform
-
-### UI/UX Libraries
-- **Design System**: shadcn/ui components
-- **Accessibility**: ARIA-compliant Radix UI
-- **Animations**: Tailwind CSS Animate
-- **Themes**: next-themes for dark/light mode
-- **Toast Notifications**: Sonner
-- **Charts**: Recharts for data visualization
 
 ## 🚀 Getting Started
 
@@ -146,12 +131,12 @@ PersonaAI is built on decades of validated research from leading psychological f
 
 2. **Install dependencies**
    ```bash
-   pnpm install
+   npm install
    ```
 
 3. **Start development server**
    ```bash
-   pnpm dev
+   npm run dev
    ```
 
 4. **Open your browser**
@@ -163,111 +148,14 @@ PersonaAI is built on decades of validated research from leading psychological f
 
 ```bash
 # Build the application
-pnpm build
+npm build
 
 # Start production server
-pnpm start
+npm start
 
 # Run linting
-pnpm lint
+npm lint
 ```
-
-## 📁 Project Structure
-
-```
-PersonaAI/
-├── app/                    # Next.js 13+ App Router
-│   ├── globals.css        # Global styles
-│   ├── layout.tsx         # Root layout component
-│   └── page.tsx           # Homepage component
-├── components/            # Reusable UI components
-│   ├── ui/               # shadcn/ui components
-│   └── theme-provider.tsx # Theme context provider
-├── hooks/                # Custom React hooks
-├── lib/                  # Utility functions and configs
-├── public/               # Static assets
-├── styles/               # Additional stylesheets
-├── components.json       # shadcn/ui configuration
-├── next.config.mjs       # Next.js configuration
-├── package.json          # Dependencies and scripts
-├── postcss.config.mjs    # PostCSS configuration
-├── tailwind.config.js    # Tailwind CSS configuration
-└── tsconfig.json         # TypeScript configuration
-```
-
-## 🎨 Design System
-
-### Color Palette
-- **Primary**: Purple gradient (#6366f1 → #a855f7)
-- **Secondary**: Blue, Green, Pink variants
-- **Neutral**: Gray scale for text and backgrounds
-- **Success/Warning/Error**: Semantic color system
-
-### Typography
-- **Primary Font**: Geist Sans (Modern, readable)
-- **Monospace**: Geist Mono (Code and technical content)
-- **Hierarchy**: Responsive typography scale
-
-### Components
-- **Accessible**: WCAG 2.1 AA compliant
-- **Responsive**: Mobile-first design approach
-- **Interactive**: Smooth animations and transitions
-- **Consistent**: Unified design language
-
-## 🤝 Contributing
-
-We welcome contributions from the community! Here's how you can help:
-
-### Development Guidelines
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
-
-### Contribution Areas
-
-- 🐛 **Bug Fixes**: Help us identify and fix issues
-- ✨ **Features**: Contribute new functionality
-- 📖 **Documentation**: Improve our docs and guides
-- 🎨 **Design**: Enhance UI/UX components
-- 🧪 **Testing**: Add test coverage and quality assurance
-- 🌐 **Localization**: Help translate the platform
-
-### Code Standards
-
-- Follow TypeScript best practices
-- Use existing component patterns
-- Maintain accessibility standards
-- Write clear, documented code
-- Test your changes thoroughly
-
-## 📊 Performance & Quality
-
-### Metrics
-- **Lighthouse Score**: 95+ across all categories
-- **Core Web Vitals**: Optimized for speed and user experience
-- **Accessibility**: WCAG 2.1 AA compliant
-- **SEO**: Search engine optimized
-
-### Quality Assurance
-- **TypeScript**: Type-safe development
-- **ESLint**: Code quality and consistency
-- **Responsive**: Works across all device sizes
-- **Browser Support**: Modern browser compatibility
-
-## 🔒 Privacy & Security
-
-- **Data Protection**: User privacy is our top priority
-- **Secure**: Industry-standard security practices
-- **Transparent**: Clear data usage policies
-- **Compliant**: GDPR and privacy regulation adherent
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 🙏 Acknowledgments
 
 - **Daniel Goleman** - Emotional Intelligence research
